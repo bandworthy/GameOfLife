@@ -35,10 +35,10 @@ namespace GameOfLife.Model
             {
                 for (int k = 0; k < world.GetLength(0); k++)
                 {
-                    if(world[i,k].Age >= 9)
+                    if (world[i,k].GetType().IsAssignableFrom(typeof(Germ)) && world[i,k].Age >= world[i,k].MaxAge)
                     {
-                        DeadGerm dead = new DeadGerm();
-                        world[i, k] = dead;
+                        DeadGerm dead = new DeadGerm(world[i, k].CorpseLast);
+                        world[i,k] = dead;
                         continue;
                     }
                     if (world[i,k] is DeadGerm && world[i,k].Age < 1)
@@ -67,15 +67,23 @@ namespace GameOfLife.Model
             {
                 for (int k = 0; k < world.GetLength(0); k++)
                 {
-                    Console.Write(world[i, k].PrintStats());
+                    world[i, k].PrintStats();
                 }
                 Console.WriteLine();
             }
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Hit ESC key to exit Program");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public void PlaceGerm( int Y, int X, string name)
         {
             Germ germ = new Germ(name);
+            world[Y, X] = germ;
+        }
+
+        public void PlaceGerm(int Y, int X, Germ germ)
+        {
             world[Y, X] = germ;
         }
 

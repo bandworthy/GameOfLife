@@ -10,7 +10,7 @@ namespace GameOfLife.Model
         public int Age { get; set; }
         public int Binaryfission { get; set; }
         public int MaxAge { get; set; }
-        
+        public int CorpseLast {get; set;}
 
         protected Germ() { }
 
@@ -20,20 +20,26 @@ namespace GameOfLife.Model
             this.Age = 0;
             this.Binaryfission = 2;
             this.MaxAge = 9;
+            this.CorpseLast = 3;
+            
         }
 
         public Germ(string name,int age)
         {
             this.Name = name;
             this.Age = age;
+            this.Binaryfission = 2;
+            this.MaxAge = 9;
+            this.CorpseLast = 3;
         }
 
-        public Germ(string name, int age, int bFiss, int mAge)
+        public Germ(string name, int age, int bFiss, int mAge, int corpse)
         {
             this.Name = name;
             this.Age = age;
             this.Binaryfission = bFiss;
             this.MaxAge = mAge;
+            this.CorpseLast = corpse;
         }
 
         public virtual void GermAge()
@@ -41,9 +47,20 @@ namespace GameOfLife.Model
             this.Age++;
         }
 
-        public virtual string PrintStats()
+        public virtual void PrintStats()
         {
-            return this.Name + this.Age.ToString();
+            if (this.Age < (this.MaxAge / 2))
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(this.Name + this.Age.ToString());
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write(this.Name + this.Age.ToString());
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
     }
 
@@ -55,14 +72,22 @@ namespace GameOfLife.Model
             this.Age = 3;
         }
 
-        public override void GermAge()
+        public DeadGerm(int CorpseRot)
         {
+            this.Name = "X";
+            this.Age = CorpseRot;
+        }
+
+        public override void GermAge()
+        {       
             this.Age--;
         }
 
-        public override string PrintStats()
+        public override void PrintStats()
         {
-            return this.Name + "X";
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(this.Name + "X");
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 
@@ -70,7 +95,7 @@ namespace GameOfLife.Model
     {
         public NoGerm()
         {
-            this.Name = "-";
+            this.Name = " ";
         }
 
         public override void GermAge()
@@ -78,9 +103,9 @@ namespace GameOfLife.Model
             this.Age = 0;
         }
 
-        public override string PrintStats()
+        public override void PrintStats()
         {
-            return this.Name + "-";
+            Console.Write(this.Name + " ");
         }
 
 

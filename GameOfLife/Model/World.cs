@@ -50,7 +50,7 @@ namespace GameOfLife.Model
 
 
 
-                    if(world[i,k].GetType().IsAssignableFrom(typeof(Germ)) && world[i,k].Age < 9)
+                    if(world[i,k].GetType().IsAssignableFrom(typeof(Germ)) && world[i,k].Age < world[i,k].MaxAge)
                     {
                             GermDivide(i, k, world[i, k]);
                             
@@ -132,7 +132,7 @@ namespace GameOfLife.Model
 
             if (growth == false && germ.Age > 1)
             {
-                germ.Age = 9;
+                germ.Age = germ.MaxAge;
             }
 
 

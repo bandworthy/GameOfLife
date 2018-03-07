@@ -9,6 +9,8 @@ namespace GameOfLife.Model
         public string Name { get; set; }
         public int Age { get; set; }
         public int Binaryfission { get; set; }
+        public int MaxAge { get; set; }
+        
 
         protected Germ() { }
 
@@ -17,12 +19,21 @@ namespace GameOfLife.Model
             this.Name = name;
             this.Age = 0;
             this.Binaryfission = 2;
+            this.MaxAge = 9;
         }
 
         public Germ(string name,int age)
         {
             this.Name = name;
             this.Age = age;
+        }
+
+        public Germ(string name, int age, int bFiss, int mAge)
+        {
+            this.Name = name;
+            this.Age = age;
+            this.Binaryfission = bFiss;
+            this.MaxAge = mAge;
         }
 
         public virtual void GermAge()

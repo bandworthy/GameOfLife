@@ -35,9 +35,29 @@ namespace GameOfLife.Model
             {
                 for (int k = 0; k < world.GetLength(0); k++)
                 {
+                    if(world[i,k].Age >= 9)
+                    {
+                        DeadGerm dead = new DeadGerm();
+                        world[i, k] = dead;
+                        continue;
+                    }
+                    if (world[i,k] is DeadGerm && world[i,k].Age < 1)
+                    {
+                        NoGerm gone = new NoGerm();
+                        world[i, k] = gone;
+                        continue;
+                    }
+
+
+
+                    if(world[i,k].GetType().IsAssignableFrom(typeof(Germ)) && world[i,k].Age < 9)
+                    {
+                            GermDivide(i, k, world[i, k]);
+                            
+                    }
+                    world[i, k].GermAge();
 
                 }
-  
             }
         }
 
@@ -57,6 +77,65 @@ namespace GameOfLife.Model
         {
             Germ germ = new Germ(name);
             world[Y, X] = germ;
+        }
+
+        private void GermDivide(int Y, int X, Germ germ)
+        {
+
+            // if it has no room it dies.
+            bool growth = false;
+            //Binaryfission
+            Random rnd = new Random();
+            int DivideNumber = rnd.Next(germ.Binaryfission);
+            
+            if (DivideNumber % 2 == 0)
+            {
+ 
+                if (X != 0 && X != world.GetLength(0) - 1)
+                {
+                    //Left 4
+                    if (world[Y, X - 1] is NoGerm && world[Y, X].Age > 1)
+                    {
+                        Germ gerrmy = new Germ(germ.Name);
+                        world[Y, X - 1] = gerrmy;
+                        growth = true;
+                    }
+                    //Right 6
+                    if (world[Y, X + 1] is NoGerm && world[Y, X].Age > 1)
+                    {
+                        Germ gerrmy = new Germ(germ.Name);
+                        world[Y, X + 1] = gerrmy;
+                        growth = true;
+                    }
+                }
+            }
+            else
+            {
+                if (Y != 0 && Y != world.GetLength(0) - 1)
+                {
+                    // Up 8
+                    if (world[Y - 1, X] is NoGerm && world[Y, X].Age > 1)
+                    {
+                        Germ gerrmy = new Germ(germ.Name);
+                        world[Y - 1, X] = gerrmy;
+                        growth = true;
+                    }
+                    // Down 2
+                    if (world[Y + 1, X] is NoGerm && world[Y, X].Age > 1)
+                    {
+                        Germ gerrmy = new Germ(germ.Name);
+                        world[Y + 1, X] = gerrmy;
+                        growth = true;
+                    }
+                }
+            }
+
+            if (growth == false && germ.Age > 1)
+            {
+                germ.Age = 9;
+            }
+
+
         }
     }
 }

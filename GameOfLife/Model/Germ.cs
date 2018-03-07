@@ -8,7 +8,7 @@ namespace GameOfLife.Model
     {
         public string Name { get; set; }
         public int Age { get; set; }
-
+        public int Binaryfission { get; set; }
 
         protected Germ() { }
 
@@ -16,6 +16,7 @@ namespace GameOfLife.Model
         {
             this.Name = name;
             this.Age = 0;
+            this.Binaryfission = 2;
         }
 
         public Germ(string name,int age)
@@ -40,12 +41,17 @@ namespace GameOfLife.Model
         public DeadGerm()
         {
             this.Name = "X";
-            this.Age = 9;
+            this.Age = 3;
         }
 
         public override void GermAge()
         {
             this.Age--;
+        }
+
+        public override string PrintStats()
+        {
+            return this.Name + "X";
         }
     }
 
@@ -54,6 +60,11 @@ namespace GameOfLife.Model
         public NoGerm()
         {
             this.Name = "-";
+        }
+
+        public override void GermAge()
+        {
+            this.Age = 0;
         }
 
         public override string PrintStats()

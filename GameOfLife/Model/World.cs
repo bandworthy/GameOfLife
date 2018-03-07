@@ -19,12 +19,12 @@ namespace GameOfLife.Model
 
         public void CreateWorld(string value)
         {
-            Germ germ = new Germ(value);
+            NoGerm EmptyGround = new NoGerm();
             for (int i = 0; i < world.GetLength(0); i++)
             {
                 for (int k = 0; k < world.GetLength(0); k++)
                 {
-                    world[i, k] = germ;
+                    world[i, k] = EmptyGround;
                 }
             }
         }
@@ -47,15 +47,16 @@ namespace GameOfLife.Model
             {
                 for (int k = 0; k < world.GetLength(0); k++)
                 {
-                    Console.Write(world[i, k]);
+                    Console.Write(world[i, k].PrintStats());
                 }
                 Console.WriteLine();
             }
         }
 
-        public void PlaceGerm( int Y, int X, Germ germ)
+        public void PlaceGerm( int Y, int X, string name)
         {
-            world[Y, X] = germ.Name + germ.Age;
+            Germ germ = new Germ(name);
+            world[Y, X] = germ;
         }
     }
 }

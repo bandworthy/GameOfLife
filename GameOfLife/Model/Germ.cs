@@ -28,6 +28,11 @@ namespace GameOfLife.Model
         {
             this.Age++;
         }
+
+        public virtual string PrintStats()
+        {
+            return this.Name + this.Age.ToString();
+        }
     }
 
     public class DeadGerm : Germ
@@ -42,5 +47,20 @@ namespace GameOfLife.Model
         {
             this.Age--;
         }
+    }
+
+    public class NoGerm : Germ
+    {
+        public NoGerm()
+        {
+            this.Name = "-";
+        }
+
+        public override string PrintStats()
+        {
+            return this.Name + "-";
+        }
+
+
     }
 }

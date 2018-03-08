@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Json;
 using System.Text;
 
 namespace GameOfLife.Model
@@ -74,6 +77,41 @@ namespace GameOfLife.Model
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Hit ESC key to exit Program");
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void SaveWorld()
+        {
+           var filePath = @"C:\Shane\world.json";
+
+            var output = JsonConvert.SerializeObject(world,Formatting.Indented);
+            System.IO.File.WriteAllText(filePath, output);
+
+        }
+
+        public void GetWorld()
+        {
+            
+            var filePath = @"C:\Shane\world.json";
+            var input = System.IO.File.ReadAllText(filePath);
+
+            // List<Germ> iworld = JsonConvert.DeserializeObject<List<Germ>>(input);
+            Germ[,] iworld = JsonConvert.DeserializeObject<Germ[,]>(input);
+            //using (StreamReader file = File.OpenText(@"C:\Shane\world.json"))
+            //{
+            //    string json = file.ReadToEnd();
+            //    JsonSerializer serializer = new JsonSerializer();
+
+            //}
+            //World world2 = JsonConvert.DeserializeObject<World>(input);
+            for (int i = 0; i < iworld.GetLength(0); i++)
+            {
+                for (int k = 0; k < iworld.GetLength(0); k++)
+                {
+                    this.world[i,k] = iworld[i,k];
+                }
+                //Console.WriteLine();
+            }
+
         }
 
         public void PlaceGerm( int Y, int X, string name)

@@ -22,8 +22,8 @@ namespace GameOfLife.Model
             this.Age = 0;
             this.Binaryfission = 2;
             this.MaxAge = DefaultM_Age;
-            this.CorpseLast = 3;
-            this.EatsDeadBacteria = false;
+            this.CorpseLast = 1;
+            this.EatsDeadBacteria = true;
             
         }
 

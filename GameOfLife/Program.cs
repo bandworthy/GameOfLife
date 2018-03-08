@@ -29,11 +29,11 @@ namespace GameOfLife
 
             world.PlaceGerm(25, 25, "A");
             
-            Germ germ = new Germ("B",0,5,15,6);
-            world.PlaceGerm(42, 10, germ);
+            //Germ germ = new Germ("B",0,5,15,6);
+            //world.PlaceGerm(42, 10, germ);
 
-            Germ germ2 = new Germ("C", 0, 8, 5, 1);
-            world.PlaceGerm(38, 40, germ2);
+            //Germ germ2 = new Germ("C", 0, 8, 5, 1);
+            //world.PlaceGerm(38, 40, germ2);
 
             do
             {

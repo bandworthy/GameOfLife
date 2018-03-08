@@ -115,13 +115,39 @@ namespace GameOfLife.Model
                         world[Y, X + 1] = gerrmy;
                         growth = true;
                     }
+                    if(world[Y,X].EatsDeadBacteria == true)
+                    {
+                        // left 4 Eat
+                        if (world[Y, X - 1] is DeadGerm && world[Y, X].Age > world[Y, X].Age / 2)
+                        {
+                            if (world[Y, X].Age >= 1)
+                            {
+                                world[Y, X].Age--;
+                            }
+                            NoGerm gerrmy = new NoGerm("--");
+                            world[Y, X - 1] = gerrmy;
+                            growth = true;
+                        }
+                        // right 6 Eat
+                        if (world[Y, X + 1] is DeadGerm && world[Y, X].Age > world[Y, X].Age / 2)
+                        {
+                            if (world[Y, X].Age >= 1)
+                            {
+                                world[Y, X].Age--;
+                            }
+                            NoGerm gerrmy = new NoGerm("--");
+                            world[Y, X + 1] = gerrmy;
+                            growth = true;
+                        }
+                    }
+
                 }
             }
             else
             {
                 if (Y != 0 && Y != world.GetLength(0) - 1)
                 {
-                    // Up 8
+                    // Up 8 
                     if (world[Y - 1, X] is NoGerm && world[Y, X].Age > 1)
                     {
                         Germ gerrmy = new Germ(germ.Name);
@@ -134,6 +160,31 @@ namespace GameOfLife.Model
                         Germ gerrmy = new Germ(germ.Name);
                         world[Y + 1, X] = gerrmy;
                         growth = true;
+                    }
+                    if (world[Y, X].EatsDeadBacteria == true)
+                    {
+                        // Up 8 eat
+                        if (world[Y - 1, X] is DeadGerm && world[Y, X].Age > world[Y, X].Age / 2)
+                        {
+                            if (world[Y, X].Age >= 1)
+                            {
+                                world[Y, X].Age--;
+                            }
+                            NoGerm gerrmy = new NoGerm("--");
+                            world[Y - 1, X] = gerrmy;
+                            growth = true;
+                        }
+                        // Down 2 eat
+                        if (world[Y + 1, X] is DeadGerm && world[Y, X].Age > world[Y, X].Age / 2)
+                        {
+                            if (world[Y, X].Age >= 1)
+                            {
+                                world[Y, X].Age--;
+                            }
+                            NoGerm gerrmy = new NoGerm("--");
+                            world[Y + 1, X] = gerrmy;
+                            growth = true;
+                        }
                     }
                 }
             }

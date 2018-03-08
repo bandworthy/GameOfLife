@@ -75,7 +75,7 @@ namespace GameOfLife.Model
                 Console.WriteLine();
             }
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Hit ESC key to exit Program");
+            Console.WriteLine("                                    Hit ESC key to exit Program");
             Console.ForegroundColor = ConsoleColor.White;
         }
 

@@ -49,7 +49,7 @@ namespace GameOfLife
 
         public static void Menu()
         {
-            Console.SetWindowSize(100, 30);
+            Console.SetWindowSize(100, 50);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("                                                                        ");
             Console.WriteLine("                                                                        ");
@@ -75,7 +75,10 @@ namespace GameOfLife
         {
             World world = new World();
             world.CreateWorld("--");
-            world.PlaceGerm(25, 25, "A");
+            world.PlaceGerm(30, 24, "A");
+            //public Germ(string name, int age, int bFiss, int mAge, int corpse,bool eatsdeadBac)
+            Germ jeremy = new Germ("Z", 0, 8, 20, 4, false);
+            world.PlaceGerm(14,40,jeremy);
             return world;
         }
         public static World Secondcoming()

@@ -76,9 +76,13 @@ namespace GameOfLife
             World world = new World();
             world.CreateWorld("--");
             world.PlaceGerm(30, 24, "A");
+            world.PlaceGerm(31, 24, "A");
+            world.PlaceGerm(32, 24, "A");
+            world.PlaceGerm(31, 22, "A");
+            world.PlaceGerm(32, 23, "A");
             //public Germ(string name, int age, int bFiss, int mAge, int corpse,bool eatsdeadBac)
-            Germ jeremy = new Germ("Z", 0, 8, 20, 4, false);
-            world.PlaceGerm(14,40,jeremy);
+            //Germ jeremy = new Germ("Z", 0, 8, 20, 4, false);
+            //world.PlaceGerm(14,40,jeremy);
             return world;
         }
         public static World Secondcoming()

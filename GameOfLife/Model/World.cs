@@ -38,34 +38,69 @@ namespace GameOfLife.Model
             {
                 for (int k = 0; k < world.GetLength(0); k++)
                 {
-                    if (world[i,k].GetType().IsAssignableFrom(typeof(Germ)) && world[i,k].Age >= world[i,k].MaxAge)
+                    //if (world[i,k].GetType().IsAssignableFrom(typeof(Germ)) && world[i,k].Age >= world[i,k].MaxAge)
+                    //{
+                    //    DeadGerm dead = new DeadGerm(world[i, k].CorpseLast);
+                    //    world[i,k] = dead;
+                    //    continue;
+                    //}
+                    //if (world[i,k] is DeadGerm && world[i,k].Age < 1)
+                    //{
+                    //    NoGerm gone = new NoGerm();
+                    //    world[i, k] = gone;
+                    //    continue;
+                    //}
+
+
+
+                    if (world[i,k].GetType().IsAssignableFrom(typeof(Germ)))
                     {
-                        DeadGerm dead = new DeadGerm(world[i, k].CorpseLast);
-                        world[i,k] = dead;
-                        continue;
+                        int count = checkAround(i, k, world[i, k]);
+
+                        
+                        if ( count < 6)
+                        {
+                            //die
+                            NoGerm deadite = new NoGerm();
+                            world[i, k] = deadite;
+                        }
+
+                        if ( count == 5 || count == 6)
+                        {
+                            //live
+                            Germ jerry = new Germ("O");
+                            world[i, k] = jerry;
+                        }
+
+                        if ( count < 5)
+                        {
+                            //die
+                            NoGerm deadite = new NoGerm();
+                            world[i, k] = deadite;
+                        }
+                        //GermDivide(i, k, world[i, k]);
+
+                                //if (HighPop(i, k) == true)
+                                //{
+                                //    DeadGerm dead = new DeadGerm(world[i, k].CorpseLast);
+                                //    world[i, k] = dead;
+                                //    continue;
+                                //}
+
                     }
-                    if (world[i,k] is DeadGerm && world[i,k].Age < 1)
+
+                    if (world[i, k] is NoGerm)
                     {
-                        NoGerm gone = new NoGerm();
-                        world[i, k] = gone;
-                        continue;
+                        int count = checkAround(i, k);
+
+                        if ( count == 3 )
+                        {
+                            Germ jerry = new Germ("O");
+                            world[i, k] = jerry;
+
+                        }
                     }
-
-
-
-                    if (world[i,k].GetType().IsAssignableFrom(typeof(Germ)) && world[i,k].Age < world[i,k].MaxAge)
-                    {
-                            GermDivide(i, k, world[i, k]);
-
-                        //if (HighPop(i, k) == true)
-                        //{
-                        //    DeadGerm dead = new DeadGerm(world[i, k].CorpseLast);
-                        //    world[i, k] = dead;
-                        //    continue;
-                        //}
-
-                    }
-                    world[i, k].GermAge();
+                    //world[i, k].GermAge();
 
 
 
@@ -79,7 +114,7 @@ namespace GameOfLife.Model
             {
                 for (int k = 0; k < world.GetLength(0); k++)
                 {
-                    world[i, k].PrintStats();
+                    world[i, k].PrintStats(i,k);
                 }
                 Console.WriteLine();
             }
@@ -126,162 +161,309 @@ namespace GameOfLife.Model
             world[Y, X] = germ;
         }
 
-        private bool HighPop(int Y, int X)
-        {
-            bool crowded = true;
-            int counter = 4;
-            try
-            {
-                if (world[Y, X - 1] is NoGerm)
-                    counter--;
-            }
-            catch (Exception ex) { }
+        //private bool HighPop(int Y, int X)
+        //{
+        //    bool crowded = true;
+        //    int counter = 4;
+        //    try
+        //    {
+        //        if (world[Y, X - 1] is NoGerm)
+        //            counter--;
+        //    }
+        //    catch (Exception ex) { }
 
-            try
-            {
-                if (world[Y, X + 1] is NoGerm)
-                    counter--;
-            }
-            catch (Exception ex) { }
+        //    try
+        //    {
+        //        if (world[Y, X + 1] is NoGerm)
+        //            counter--;
+        //    }
+        //    catch (Exception ex) { }
 
-            try
-            {
-                if (world[Y + 1, X] is NoGerm)
-                    counter--;
-            }
-            catch(Exception ex) { }
+        //    try
+        //    {
+        //        if (world[Y + 1, X] is NoGerm)
+        //            counter--;
+        //    }
+        //    catch(Exception ex) { }
 
-            try
-            {
-                if (world[Y + 1, X] is NoGerm)
-                    counter--;
-            }
-            catch (Exception ex) { }
+        //    try
+        //    {
+        //        if (world[Y + 1, X] is NoGerm)
+        //            counter--;
+        //    }
+        //    catch (Exception ex) { }
 
 
          
-             if (counter <= 2)
-                crowded = false;
+        //     if (counter <= 2)
+        //        crowded = false;
 
-            return crowded;
-        }
+        //    return crowded;
+        //}
 
         private void GermDivide(int Y, int X, Germ germ)
         {
 
-            // if it has no room it dies.
-            bool growth = false;
-            //Binaryfission
-            Random rnd = new Random();
-            int DivideNumber = rnd.Next(germ.Binaryfission);
-            int BadDivide = rnd.Next(0, 15);
+            //// if it has no room it dies.
+            //bool growth = false;
+            ////Binaryfission
+            //Random rnd = new Random();
+            //int DivideNumber = rnd.Next(germ.Binaryfission);
+            //int BadDivide = rnd.Next(0, 15);
 
-            if (BadDivide >= 14)
+            //if (BadDivide >= 14)
+            //{
+            //    growth = false;
+            //}  
+            //else
+            //{
+            //    if (DivideNumber % 2 == 0)
+            //    {
+
+            //        if (X != 0 && X != world.GetLength(0) - 1)
+            //        {
+            //            //Left 4
+            //            if (world[Y, X - 1] is NoGerm && world[Y, X].Age > 1)
+            //            {
+            //                Germ gerrmy = new Germ(germ.Name);
+            //                world[Y, X - 1] = gerrmy;
+            //                growth = true;
+            //            }
+            //            //Right 6
+            //            if (world[Y, X + 1] is NoGerm && world[Y, X].Age > 1)
+            //            {
+            //                Germ gerrmy = new Germ(germ.Name);
+            //                world[Y, X + 1] = gerrmy;
+            //                growth = true;
+            //            }
+            //            if (world[Y, X].EatsDeadBacteria == true)
+            //            {
+            //                // left 4 Eat
+            //                if (world[Y, X - 1] is DeadGerm && world[Y, X].Age > world[Y, X].Age / 2)
+            //                {
+            //                    if (world[Y, X].Age >= 1)
+            //                    {
+            //                        world[Y, X].Age--;
+            //                    }
+            //                    NoGerm gerrmy = new NoGerm("--");
+            //                    world[Y, X - 1] = gerrmy;
+            //                    growth = true;
+            //                }
+            //                // right 6 Eat
+            //                if (world[Y, X + 1] is DeadGerm && world[Y, X].Age > world[Y, X].Age / 2)
+            //                {
+            //                    if (world[Y, X].Age >= 1)
+            //                    {
+            //                        world[Y, X].Age--;
+            //                    }
+            //                    NoGerm gerrmy = new NoGerm("--");
+            //                    world[Y, X + 1] = gerrmy;
+            //                    growth = true;
+            //                }
+            //            }
+
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (Y != 0 && Y != world.GetLength(0) - 1)
+            //        {
+            //            // Up 8 
+            //            if (world[Y - 1, X] is NoGerm && world[Y, X].Age > 1)
+            //            {
+            //                Germ gerrmy = new Germ(germ.Name);
+            //                world[Y - 1, X] = gerrmy;
+            //                growth = true;
+            //            }
+            //            // Down 2
+            //            if (world[Y + 1, X] is NoGerm && world[Y, X].Age > 1)
+            //            {
+            //                Germ gerrmy = new Germ(germ.Name);
+            //                world[Y + 1, X] = gerrmy;
+            //                growth = true;
+            //            }
+            //            if (world[Y, X].EatsDeadBacteria == true)
+            //            {
+            //                // Up 8 eat
+            //                if (world[Y - 1, X] is DeadGerm && world[Y, X].Age > world[Y, X].Age / 2)
+            //                {
+            //                    if (world[Y, X].Age >= 1)
+            //                    {
+            //                        world[Y, X].Age--;
+            //                    }
+            //                    NoGerm gerrmy = new NoGerm("--");
+            //                    world[Y - 1, X] = gerrmy;
+            //                    growth = true;
+            //                }
+            //                // Down 2 eat
+            //                if (world[Y + 1, X] is DeadGerm && world[Y, X].Age > world[Y, X].Age / 2)
+            //                {
+            //                    if (world[Y, X].Age >= 1)
+            //                    {
+            //                        world[Y, X].Age--;
+            //                    }
+            //                    NoGerm gerrmy = new NoGerm("--");
+            //                    world[Y + 1, X] = gerrmy;
+            //                    growth = true;
+            //                }
+            //            }
+            //        }
+            //    }
+
+            //}
+            //if (growth == false && germ.Age > 1)
+            //{
+            //    germ.Age = germ.MaxAge;
+            //}
+
+
+        }
+
+        private int checkAround(int i, int k, Germ germ)
+        {
+            int count = 0;
+
+            //4  Left
+            try
             {
-                growth = false;
+                if (world[i, k - 1] is NoGerm)
+                    count++;
             }
-            else
+            catch (IndexOutOfRangeException ex) { }
+
+            //7  Left Up
+            try
             {
-                if (DivideNumber % 2 == 0)
-                {
-
-                    if (X != 0 && X != world.GetLength(0) - 1)
-                    {
-                        //Left 4
-                        if (world[Y, X - 1] is NoGerm && world[Y, X].Age > 1)
-                        {
-                            Germ gerrmy = new Germ(germ.Name);
-                            world[Y, X - 1] = gerrmy;
-                            growth = true;
-                        }
-                        //Right 6
-                        if (world[Y, X + 1] is NoGerm && world[Y, X].Age > 1)
-                        {
-                            Germ gerrmy = new Germ(germ.Name);
-                            world[Y, X + 1] = gerrmy;
-                            growth = true;
-                        }
-                        if (world[Y, X].EatsDeadBacteria == true)
-                        {
-                            // left 4 Eat
-                            if (world[Y, X - 1] is DeadGerm && world[Y, X].Age > world[Y, X].Age / 2)
-                            {
-                                if (world[Y, X].Age >= 1)
-                                {
-                                    world[Y, X].Age--;
-                                }
-                                NoGerm gerrmy = new NoGerm("--");
-                                world[Y, X - 1] = gerrmy;
-                                growth = true;
-                            }
-                            // right 6 Eat
-                            if (world[Y, X + 1] is DeadGerm && world[Y, X].Age > world[Y, X].Age / 2)
-                            {
-                                if (world[Y, X].Age >= 1)
-                                {
-                                    world[Y, X].Age--;
-                                }
-                                NoGerm gerrmy = new NoGerm("--");
-                                world[Y, X + 1] = gerrmy;
-                                growth = true;
-                            }
-                        }
-
-                    }
-                }
-                else
-                {
-                    if (Y != 0 && Y != world.GetLength(0) - 1)
-                    {
-                        // Up 8 
-                        if (world[Y - 1, X] is NoGerm && world[Y, X].Age > 1)
-                        {
-                            Germ gerrmy = new Germ(germ.Name);
-                            world[Y - 1, X] = gerrmy;
-                            growth = true;
-                        }
-                        // Down 2
-                        if (world[Y + 1, X] is NoGerm && world[Y, X].Age > 1)
-                        {
-                            Germ gerrmy = new Germ(germ.Name);
-                            world[Y + 1, X] = gerrmy;
-                            growth = true;
-                        }
-                        if (world[Y, X].EatsDeadBacteria == true)
-                        {
-                            // Up 8 eat
-                            if (world[Y - 1, X] is DeadGerm && world[Y, X].Age > world[Y, X].Age / 2)
-                            {
-                                if (world[Y, X].Age >= 1)
-                                {
-                                    world[Y, X].Age--;
-                                }
-                                NoGerm gerrmy = new NoGerm("--");
-                                world[Y - 1, X] = gerrmy;
-                                growth = true;
-                            }
-                            // Down 2 eat
-                            if (world[Y + 1, X] is DeadGerm && world[Y, X].Age > world[Y, X].Age / 2)
-                            {
-                                if (world[Y, X].Age >= 1)
-                                {
-                                    world[Y, X].Age--;
-                                }
-                                NoGerm gerrmy = new NoGerm("--");
-                                world[Y + 1, X] = gerrmy;
-                                growth = true;
-                            }
-                        }
-                    }
-                }
-
+                if (world[i + 1, k - 1] is NoGerm)
+                    count++;
             }
-            if (growth == false && germ.Age > 1)
+            catch (IndexOutOfRangeException ex) { }
+
+            //8  Up
+            try
             {
-                germ.Age = germ.MaxAge;
+                if (world[i + 1, k] is NoGerm)
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex) { }
+
+            //9  Up Right
+            try
+            {
+                if (world[i + 1, k + 1] is NoGerm)
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex) { }
+
+            //6  Right
+            try
+            {
+                if (world[i, k + 1] is NoGerm)
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex) { }
+
+            //3  Right Down
+            try
+            {
+                if (world[i - 1, k + 1] is NoGerm)
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex) { }
+
+            //2  Down
+            try
+            {
+                if (world[i - 1, k] is NoGerm)
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex) { }
+
+            //1  Left Down
+            try
+            {
+                if (world[i - 1, k - 1] is NoGerm)
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex) { }
+
+
+            return count;
+        }
+        private int checkAround(int i, int k)
+        {
+            int count = 0;
+
+            //4  Left
+            try
+            {
+                if (world[i, k - 1].GetType().IsAssignableFrom(typeof(Germ)))
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex) {}
+
+            //7  Left Up
+            try
+            {
+                if (world[i + 1, k - 1].GetType().IsAssignableFrom(typeof(Germ)))
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex) {}
+
+            //8  Up
+            try
+            {
+                if (world[i + 1, k].GetType().IsAssignableFrom(typeof(Germ)))
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex) {}
+
+            //9  Up Right
+            try
+            {
+                if (world[i + 1, k + 1].GetType().IsAssignableFrom(typeof(Germ)))
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex) {}
+
+            //6  Right
+            try
+            {
+                if (world[i, k + 1].GetType().IsAssignableFrom(typeof(Germ)))
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex) {}
+
+            //3  Right Down
+            try
+            {
+                if (world[i - 1, k + 1].GetType().IsAssignableFrom(typeof(Germ)))
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex) {}
+
+            //2  Down
+            try
+            {
+                if (world[i - 1, k].GetType().IsAssignableFrom(typeof(Germ)))
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex)
+            {}
+
+                //1  Left Down
+                try
+            {
+                if (world[i - 1, k - 1].GetType().IsAssignableFrom(typeof(Germ)))
+                    count++;
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+               
             }
 
 
+            return count;
         }
     }
 }

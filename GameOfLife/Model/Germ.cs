@@ -23,7 +23,7 @@ namespace GameOfLife.Model
             this.Binaryfission = 2;
             this.MaxAge = DefaultM_Age;
             this.CorpseLast = 1;
-            this.EatsDeadBacteria = true;
+            this.EatsDeadBacteria = false;
             
         }
 
@@ -79,6 +79,15 @@ namespace GameOfLife.Model
             }
         }
 
+        public virtual void PrintStats(int i , int k)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(i + k);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+       
+
         public bool EatsOther(Germ germ)
         {
             if (this.Eats == germ.Name)
@@ -120,6 +129,11 @@ namespace GameOfLife.Model
             Console.Write(this.Name + "X");
             Console.ForegroundColor = ConsoleColor.White;
         }
+
+        public override void PrintStats(int i, int k)
+        {
+
+        }
     }
 
     public class NoGerm : Germ
@@ -142,6 +156,11 @@ namespace GameOfLife.Model
         public override void PrintStats()
         {
             Console.Write(this.Name + this.Name);
+        }
+
+        public override void PrintStats(int i, int k)
+        {
+
         }
 
 
